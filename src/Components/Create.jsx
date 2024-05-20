@@ -6,15 +6,16 @@ import React, { useState } from 'react';
 // permettra de dispatcher des actions pour mettre à jour l'état du store Redux 
 import { addUser } from '../Features/UserReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Create() {
   // Définir les états locaux pour les champs du formulaire
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userName, setUserName] = useState('');
-  const [age, setAge] = useState('');
+  const [FirtName, setFirstName] = useState('');
+  const [LastName, setLastName] = useState('');
+  const [UserName, setUserName] = useState('');
+  const [Age, setAge] = useState('');
   
   // Utilisation du hook useSelector pour accéder à la partie 'users' de l'état global du store Redux
   // et stocker les utilisateurs dans la variable locale 'users'
@@ -23,7 +24,8 @@ function Create() {
   // Utilisation du hook useDispatch pour obtenir une référence à la fonction dispatch du store Redux
   const dispatch =  useDispatch();
 
-  // navigation
+  // Utilisation du hook  useNavigate 
+  const navigate = useNavigate();
 
   // Fonction pour gérer la soumission du formulaire
   const handleSubmit = (event) => {
@@ -31,13 +33,10 @@ function Create() {
 
     // Dispatch de l'action addUser pour ajouter un nouvel utilisateur au store Redux
     // Génération de l'ID pour le nouvel utilisateur en ajoutant 1 à l'ID du dernier utilisateur
-    dispatch(addUser({id: users[users.lenght-1].id + 1, firstName ,  lastName ,  userName , age}))
-    
-    // Réinitialiser les états des champs du formulaire après la soumission
-    setFirstName('');
-    setLastName('');
-    setUserName('');
-    setAge('');
+    dispatch(addUser({id: users[users.length-1].id + 1, FirtName ,  LastName ,  UserName , Age}))
+     
+    // naviger vers home 
+    navigate('/')
   };
 
   return (
@@ -45,7 +44,7 @@ function Create() {
       <h2 className="mt-3 mb-4">Create User</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">First Name</label>
+          <label htmlFor="firstName" className="form-label">First Name : </label>
           <input
             type="text"
             className="form-control"
@@ -55,7 +54,7 @@ function Create() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">Last Name</label>
+          <label htmlFor="lastName" className="form-label">Last Name : </label>
           <input
             type="text"
             className="form-control"
@@ -65,7 +64,7 @@ function Create() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="userName" className="form-label">User Name</label>
+          <label htmlFor="userName" className="form-label">User Name : </label>
           <input
             type="text"
             className="form-control"
@@ -74,7 +73,7 @@ function Create() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="age" className="form-label">Age</label>
+          <label htmlFor="age" className="form-label">Age : </label>
           <input
             type="number"
             className="form-control"

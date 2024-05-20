@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // userList est une donnée initiale dans data
 import { userList } from "../../public/data/Data";
+import Update from "../Components/Update";
 
 // Création d'un slice Redux appelé "userSlice" pour gérer l'état des utilisateurs.
 // Un slice est une portion de l'état Redux qui concerne une fonctionnalité spécifique.
@@ -21,10 +22,41 @@ const userSlice = createSlice({
       state.push(action.payload);
       //'state' fait référence à l'état actuel du slice, et 'action' contient les données envoyées avec l'action
       //Redux Toolkit utilise une approche "mutable" pour la mise à jour de l'état, donc nous pouvons modifier 'state' directement
-      // console.log(action); 
+      //console.log(action);
     },
+
+    // Réducteur pour mettre à jour un utilisateur existant dans l'état Redux
+    UpdateUser: (state, action) => {
+      // Déstructuration des propriétés de l'action payload
+      const { id, FirstName, LastName, UserName, Age } = action.payload;
+
+      // Trouver l'utilisateur existant par son ID
+      const userToUpdate = state.find((user) => user.id === id);
+
+      // Si l'utilisateur est trouvé, mettre à jour ses propriétés
+      if (userToUpdate) {
+        userToUpdate.FirstName = FirstName;
+        userToUpdate.LastName = LastName;
+        userToUpdate.UserName = UserName;
+        userToUpdate.Age = Age;
+      }
+    },
+
+    // reducueur pour delete users
+    deleteUser: (state, action) => {
+      // Déstructuration des propriétés de l'action payload
+      const { id } = action.payload;
+
+      // Trouver l'utilisateur existant par son ID
+      const uu = state.find((user) => user.id === id);
+
+      if (uu) {
+        return state.filter((f) => f.id !== id);
+      }
+    },
+
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, UpdateUser ,  deleteUser} = userSlice.actions;
 export default userSlice.reducer;
