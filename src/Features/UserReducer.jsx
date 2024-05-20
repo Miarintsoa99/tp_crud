@@ -44,16 +44,18 @@ const userSlice = createSlice({
 
     // reducueur pour delete users
     deleteUser: (state, action) => {
-      // Déstructuration des propriétés de l'action payload
-      const { id } = action.payload;
-
-      // Trouver l'utilisateur existant par son ID
-      const uu = state.find((user) => user.id === id);
-
-      if (uu) {
-        return state.filter((f) => f.id !== id);
-      }
-    },
+        // Déstructuration des propriétés de l'action payload
+        const { id } = action.payload;
+      
+        // Trouver l'utilisateur existant par son ID
+        const userToDelete = state.find(user => user.id === id);
+      
+        // Si l'utilisateur est trouvé, retourner un nouvel état sans cet utilisateur
+        if (userToDelete) {
+          return state.filter(user => user.id !== id);
+        }
+      },
+      
 
   },
 });
